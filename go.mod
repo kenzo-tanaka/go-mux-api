@@ -1,4 +1,4 @@
-module github.com/kenzo-tanaka/go-mux-api/issues
+module github.com/kenzo-tanaka/go-mux-api
 
 go 1.17
 
