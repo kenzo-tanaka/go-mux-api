@@ -2,6 +2,7 @@ package main_test
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"testing"
 
@@ -31,6 +32,19 @@ func ensureTableExists() {
 func clearTalbe() {
 	a.DB.Exec("DELETE FROM products")
 	a.DB.Exec("ALTER SEQUENCE products_id_seq RESTART WITH 1")
+}
+
+func TestEmptyTable(t *testing.T) {
+	clearTalbe()
+
+	req, _ := http.NewRequest("GET", "/products", nil)
+	response := executeRequest(req)
+
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	if body := response.Body.String(); body != "[]" {
+		t.Errorf("Expected an empty array. Got %s", body)
+	}
 }
 
 const tableCreationQuery = `CREATE TABLE IF NOT EXISTS products
