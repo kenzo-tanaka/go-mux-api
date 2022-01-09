@@ -5,6 +5,10 @@ export APP_DB_NAME=postgres
 ``` 
 
 ```shell
-docker run -it -p 5342:5432 -d postgres
+# docker run
+docker run -it -p 5432:5432 -e 'POSTGRES_PASSWORD=postgres' -e 'POSTGRES_HOST_AUTH_METHOD=trust' -d postgres
+```
+
+```shell
 go test -v
 ```
