@@ -4,7 +4,8 @@ import (
 	"log"
 	"os"
 	"testing"
-	"github.com/kenzo-tanaka/go-mux-api"
+
+	main "github.com/kenzo-tanaka/go-mux-api"
 )
 
 var a main.App
