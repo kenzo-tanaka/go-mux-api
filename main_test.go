@@ -55,6 +55,12 @@ func executeRequest(req *http.Request) *httptest.ResponseRecorder {
 	return rr
 }
 
+func checkResponseCode(t *testing.T, expected, actual int) {
+	if expected != actual {
+		t.Errorf("Expected response code %d, Go %d \n", expected, actual)
+	}
+}
+
 const tableCreationQuery = `CREATE TABLE IF NOT EXISTS products
 (
 	id SERIAL,
