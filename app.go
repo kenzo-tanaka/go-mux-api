@@ -29,6 +29,8 @@ func (a *App) Initialize(user, password, dbname string) {
 	}
 
 	a.Router = mux.NewRouter()
+
+	a.intiializeRoutes()
 }
 
 func (a *App) Run(addr string) {}
@@ -62,4 +64,8 @@ func (a *App) getProducts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	respondWithJSON(w, http.StatusOK, products)
+}
+
+func (a *App) intiializeRoutes() {
+	a.Router.HandleFunc("/products", a.getProducts).Methods("GET")
 }
