@@ -3,6 +3,7 @@ package main_test
 import (
 	"log"
 	"net/http"
+	"net/http/httptest"
 	"os"
 	"testing"
 
@@ -45,6 +46,13 @@ func TestEmptyTable(t *testing.T) {
 	if body := response.Body.String(); body != "[]" {
 		t.Errorf("Expected an empty array. Got %s", body)
 	}
+}
+
+func executeRequest(req *http.Request) *httptest.ResponseRecorder {
+	rr := httptest.NewRecorder()
+	a.Router.ServeHTTP(rr, req)
+
+	return rr
 }
 
 const tableCreationQuery = `CREATE TABLE IF NOT EXISTS products
