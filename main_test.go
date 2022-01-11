@@ -61,7 +61,7 @@ func TestGetNonExistentProduct(t *testing.T) {
 	json.Unmarshal(response.Body.Bytes(), &m)
 
 	if m["error"] != "Product not found" {
-		t.Errorf("Expected the 'error' key of the response to be set to 'Product not found', Go %s", m["error"])
+		t.Errorf("Expected the 'error' key of the response to be set to 'Product not found', Got %s", m["error"])
 	}
 }
 

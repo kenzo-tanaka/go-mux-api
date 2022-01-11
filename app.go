@@ -90,4 +90,5 @@ func (a *App) getProduct(w http.ResponseWriter, r *http.Request) {
 
 func (a *App) intiializeRoutes() {
 	a.Router.HandleFunc("/products", a.getProducts).Methods("GET")
+	a.Router.HandleFunc("/product/{id:[0-9]+}", a.getProduct).Methods("GET")
 }
