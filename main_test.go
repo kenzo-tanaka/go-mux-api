@@ -1,6 +1,7 @@
 package main_test
 
 import (
+	"encoding/json"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -48,21 +49,21 @@ func TestEmptyTable(t *testing.T) {
 	}
 }
 
-// func TestGetNonExistentProduct(t *testing.T) {
-// 	clearTalbe()
+func TestGetNonExistentProduct(t *testing.T) {
+	clearTalbe()
 
-// 	req, _ := http.NewRequest("GET", "/product/11", nil)
-// 	response := executeRequest(req)
+	req, _ := http.NewRequest("GET", "/product/11", nil)
+	response := executeRequest(req)
 
-// 	checkResponseCode(t, http.StatusNotFound, response.Code)
+	checkResponseCode(t, http.StatusNotFound, response.Code)
 
-// 	var m map[string]string
-// 	json.Unmarshal(response.Body.Bytes(), &m)
+	var m map[string]string
+	json.Unmarshal(response.Body.Bytes(), &m)
 
-// 	if m["error"] != "Product not found" {
-// 		t.Errorf("Expected the 'error' key of the response to be set to 'Product not found', Go %s", m["error"])
-// 	}
-// }
+	if m["error"] != "Product not found" {
+		t.Errorf("Expected the 'error' key of the response to be set to 'Product not found', Go %s", m["error"])
+	}
+}
 
 func executeRequest(req *http.Request) *httptest.ResponseRecorder {
 	rr := httptest.NewRecorder()
