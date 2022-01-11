@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strconv"
 	"testing"
 
 	main "github.com/kenzo-tanaka/go-mux-api"
@@ -62,6 +63,26 @@ func TestGetNonExistentProduct(t *testing.T) {
 
 	if m["error"] != "Product not found" {
 		t.Errorf("Expected the 'error' key of the response to be set to 'Product not found', Got %s", m["error"])
+	}
+}
+
+func TestGetProduct(t *testing.T) {
+	clearTalbe()
+	addProducts(1)
+
+	req, _ := http.NewRequest("GET", "/product/1", nil)
+	response := executeRequest(req)
+
+	checkResponseCode(t, http.StatusOK, response.Code)
+}
+
+func addProducts(count int) {
+	if count < 1 {
+		count = 1
+	}
+
+	for i := 0; i < count; i++ {
+		a.DB.Exec("INSERT INTO products(name, price) VALUES($1, $2)", "Product "+strconv.Itoa(i), (i+1.0)*10)
 	}
 }
 
