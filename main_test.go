@@ -1,6 +1,7 @@
 package main_test
 
 import (
+	"bytes"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -74,6 +75,17 @@ func TestGetProduct(t *testing.T) {
 	response := executeRequest(req)
 
 	checkResponseCode(t, http.StatusOK, response.Code)
+}
+
+func TestCreateProduct(t *testing.T) {
+	clearTalbe()
+
+	var jsonStr = []byte(`{"name": "test product", "price": 11.22}`)
+	req, _ := http.NewRequest("POST", "/product", bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
+
+	response := executeRequest(req)
+	checkResponseCode(t, http.StatusCreated, response.Code)
 }
 
 func addProducts(count int) {
