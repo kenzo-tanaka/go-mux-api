@@ -88,6 +88,36 @@ func TestCreateProduct(t *testing.T) {
 	checkResponseCode(t, http.StatusCreated, response.Code)
 }
 
+func TestUpdateProduct(t *testing.T) {
+	clearTalbe()
+	addProducts(1)
+
+	req, _ := http.NewRequest("GET", "/product/1", nil)
+	response := executeRequest(req)
+
+	var originalProduct map[string]interface{}
+	json.Unmarshal(response.Body.Bytes(), &originalProduct)
+
+	var jsonStr = []byte(`{"name": "test product - updated name", "price": 11.22}`)
+	req, _ = http.NewRequest("PUT", "/product/1", bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
+
+	response = executeRequest(req)
+
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	var m map[string]interface{}
+	json.Unmarshal(response.Body.Bytes(), &m)
+
+	if m["id"] != originalProduct["id"] {
+		t.Errorf("Expected %v Got %v", originalProduct["id"], m["id"])
+	}
+
+	if m["price"] == originalProduct["price"] {
+		t.Errorf("Expected %v is changed", originalProduct["price"])
+	}
+}
+
 func addProducts(count int) {
 	if count < 1 {
 		count = 1
