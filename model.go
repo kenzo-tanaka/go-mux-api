@@ -15,10 +15,6 @@ func (p *product) getProduct(db *sql.DB) error {
 	return db.QueryRow("SELECT name, price FROM products WHERE id=$1", p.ID).Scan(&p.Name, &p.Price)
 }
 
-func (p *product) updateProduct(db *sql.DB) error {
-	return errors.New("Not implemented")
-}
-
 func (p *product) deleteProduct(db *sql.DB) error {
 	return errors.New("Not implemented")
 }
@@ -32,6 +28,12 @@ func (p *product) createProduct(db *sql.DB) error {
 		return err
 	}
 	return nil
+}
+
+func (p *product) updateProduct(db *sql.DB) error {
+	_, err := db.Exec("UPDATE products SET name=$1, price=$2 where id=$3", p.Name, p.Price, p.ID)
+
+	return err
 }
 
 func getProducts(db *sql.DB, start, count int) ([]product, error) {
