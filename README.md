@@ -20,7 +20,9 @@ go test -v
 === RUN   TestCreateProduct
 --- PASS: TestCreateProduct (0.01s)
 === RUN   TestUpdateProduct
---- PASS: TestUpdateProduct (0.01s)
+--- PASS: TestUpdateProduct (0.02s)
+=== RUN   TestDeleteProduct
+--- PASS: TestDeleteProduct (0.02s)
 PASS
-ok      github.com/kenzo-tanaka/go-mux-api      0.236s
+ok      github.com/kenzo-tanaka/go-mux-api      0.256s
 ```
