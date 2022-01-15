@@ -60,3 +60,9 @@ func getProducts(db *sql.DB, start, count int) ([]product, error) {
 
 	return products, nil
 }
+
+func (p *product) deleteProduct(db *sql.DB) error {
+	_, err := db.Exec("DELETE from products where id = $1", p.ID)
+
+	return err
+}
