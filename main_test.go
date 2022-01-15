@@ -118,6 +118,24 @@ func TestUpdateProduct(t *testing.T) {
 	}
 }
 
+func TestDeleteProduct(t *testing.T) {
+	clearTalbe()
+	addProducts(1)
+
+	req, _ := http.NewRequest("GET", "/product/1", nil)
+	response := executeRequest(req)
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	req, _ = http.NewRequest("DELETE", "/product/1", nil)
+	response = executeRequest(req)
+
+	checkResponseCode(t, http.StatusOK, response.Code)
+
+	req, _ = http.NewRequest("GET", "/product/1", nil)
+	response = executeRequest(req)
+	checkResponseCode(t, http.StatusNotFound, response.Code)
+}
+
 func addProducts(count int) {
 	if count < 1 {
 		count = 1
